@@ -6,6 +6,12 @@
     <title>term terminal</title>
     <style type="text/css">
     .terminal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        float: none;
         font-family: Consolas, monospace;
         font-size: 12px;
         color: rgb(240, 240, 240);
@@ -37,8 +43,8 @@
                 data += thunk.trim();
             };
             var term = window.term = new Terminal({
-                cols: 80,
-                rows: 24,
+                cols: 200,
+                rows: 100,
                 useStyle: true,
                 screenKeys: true
             });
