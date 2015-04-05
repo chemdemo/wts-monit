@@ -1,14 +1,15 @@
 /*
 * @Author: chemdemo
 * @Date:   2015-04-05 00:58:29
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-05 22:02:17
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-06 02:43:33
 */
 
 'use strict';
 
 ;(function(win) {
 
+    // {clientId: [Window, Window]}
     var termWins = {};
 
     function init() {
@@ -36,10 +37,14 @@
                 default: break;
             }
         });
+
+        $(win).on('beforeunload', function() {
+            for(var cid in termWins) closeTerm(cid);
+        });
     };
 
     function openTerm(cid) {
-        var termId = 'term' + Math.floor((Math.random()*100) + 1);
+        var termId = String(Math.random()).replace('\.', '');
         var features = 'directories=0,location=0,menubar=0,status=0,titlebar=0,toolbar=0,width=960,height=650';
         var termWin = window.open('/term/' + cid + '/' + termId, '', features);
 
