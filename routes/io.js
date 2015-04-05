@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-03 18:29:55
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-05 23:14:34
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-06 02:50:17
 */
 
 'use strict';
@@ -34,7 +34,7 @@ function onSockConf(clientId, termId) {
     if(client) client.addTerm(termId, socket);
 };
 
-function onSockInput(cmd) {
+function onSockInput(data) {
     var socket = this.socket;
     var cid = socket.clientId;
     var termId = socket.termId;
@@ -47,7 +47,7 @@ function onSockInput(cmd) {
         return;
     }
 
-    client.sendMsg({cmd: 'term:input', termId: termId, input: cmd});
+    client.sendMsg({cmd: 'term:input', termId: termId, input: data});
 };
 
 function onSockError(err) {
