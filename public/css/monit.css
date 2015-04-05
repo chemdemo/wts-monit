@@ -1,0 +1,32 @@
+/*
+* @Author: chemdemo
+* @Date:   2015-04-05 00:59:06
+* @Last Modified by:   dm.yang
+* @Last Modified time: 2015-04-05 18:06:33
+*/
+
+.client-list {
+    width: 90%;
+    margin: 0 auto;
+    /*table-layout: fixed;*/
+    border-collapse: collapse;
+}
+
+.client-list td[rowspan] {
+    vertical-align: middle;
+    text-align: center;
+    color: #3bb4f2;
+    font-weight: bold;
+}
+
+.am-icon-circle {
+    ;
+}
+
+.status-online {
+    color: #5eb95e;
+}
+
+.status-offline {
+    color: #dd514c;
+}
