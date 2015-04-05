@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-03 16:00:49
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-03 19:11:15
+* @Last Modified time: 2015-04-05 12:19:50
 */
 
 'use strict';
@@ -20,7 +20,7 @@ module.exports = {
     },
     rpcServer: {
         host: '0.0.0.0',
-        port: 29000
+        port: 3977
     },
     logger: {
         root: path.resolve(__dirname, '../logs/'),

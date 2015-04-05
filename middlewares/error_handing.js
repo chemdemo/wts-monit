@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-01-07 16:09:02
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-03 17:47:03
+* @Last Modified time: 2015-04-05 15:31:35
 */
 
 'use strict';
@@ -17,19 +17,10 @@ exports.error5xx = function (app) {
             this.status = err.status || 500;
             this.app.emit('error', err, this);
 
-            var errMsg = env.isDev ? err.stack : 'Internal Server Error';
+            var errMsg = isDev ? err.stack : 'Internal Server Error';
 
-            switch (this.accepts('html', 'json')) {
-                case 'html':
-                    yield this.render('error', { error: errMsg });
-                    break;
-                case 'json':
-                    this.body = { message: errMsg };
-                    break
-                default:
-                    this.type = 'text';
-                    this.body = errMsg;
-            }
+            this.type = 'text';
+            this.body = errMsg;
         }
     };
 };
@@ -43,17 +34,7 @@ exports.error404 = function (app) {
         // we need to explicitly set 404 here
         // so that koa doesn't assign 200 on body=
         this.status = 404;
-
-        switch (this.accepts('html', 'json')) {
-            case 'html':
-                yield this.render('404');
-                break;
-            case 'json':
-                this.body = {message: 'Not Found'};
-                break;
-            default:
-                this.type = 'text';
-                this.body = 'Not Found';
-        }
+        this.type = 'text';
+        this.body = 'Not Found';
     };
 };

@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-03 19:01:26
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-03 19:42:43
+* @Last Modified time: 2015-04-05 22:21:19
 */
 
 'use strict';
@@ -37,6 +37,7 @@ function onSvrError(err) {
 
 function onSvrClose() {
     logger.error('Server closed');
+    clientsMgr.clientMap = {};
     setTimeout(listen, 1000);
 };
 
@@ -45,7 +46,7 @@ function onConnection(sock) {
 };
 
 function listen() {
-    server.listen(port, host, function() {
-        logger.info('Server running at %s:%s', host, port);
+    server.listen(conf.port, conf.host, function() {
+        logger.info('Server running at %s:%s', conf.host, conf.port);
     });
 };
