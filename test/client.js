@@ -1,19 +1,20 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-05 23:12:10
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-06 03:04:11
 */
 
 'use strict';
 
 var net = require('net');
-var exec = require('child_process').exec;
+var pty = require('pty.js');
 
-var monitHost = '192.168.33.88';
+var monitHost = '0.0.0.0';
 var monitPort = 3977;
 
 var sock = new net.Socket();
+var terms = {};
 
 connect();
 
@@ -72,16 +73,19 @@ sock.on('data', function(msg) {
             break;
 
         case 'term:input':
-            console.log('CMD:', msg.input);
-            exec(msg.input, function(err, stdout, stderr) {
-                if(!err) {
-                    console.log(stdout);
-                    send2monit({cmd: 'client:output', termId: msg.termId, output: stdout});
-                } else {
-                    console.error(err);
-                    send2monit({cmd: 'client:output', termId: msg.termId, output: stderr || err.message});
-                }
-            });
+            var term = getTerm(msg.termId);
+
+            if(term) term.write(msg.input, 'utf8');
+            console.log('INPUT:', msg.input);
+            break;
+
+        case 'term:destroy':
+            var term = getTerm(msg.termId);
+
+            if(term) {
+                delete terms[msg.termId];
+                console.log('remove term:%s', msg.termId);
+            }
             break;
 
         default: break;
@@ -113,4 +117,28 @@ function send2monit(msg) {
     sock.write(str, 'utf8');
     // sock.end(str, 'utf8');
     console.log('client write msg:%s', str);
+};
+
+function getTerm(termId) {
+    if(termId in terms) return terms[termId];
+
+    var term = pty.fork(
+        process.env.SHELL || 'sh', [], {
+            name: require('fs').existsSync('/usr/share/terminfo/x/xterm-256color')
+                ? 'xterm-256color'
+                : 'xterm',
+            cols: 80,
+            rows: 40,
+            cwd: process.env.HOME
+        }
+    );
+
+    term.on('data', function(output) {
+        console.log('OUTPUT:', output);
+        send2monit({cmd: 'client:output', termId: termId, output: output});
+    });
+
+    terms[termId] = term;
+
+    return term;
 };
