@@ -1,8 +1,8 @@
 /*
  * @Author: dm.yang
  * @Date:   2015-04-05 17:06:08
- * @Last Modified by:   chemdemo
- * @Last Modified time: 2015-04-06 02:49:49
+ * @Last Modified by:   dm.yang
+ * @Last Modified time: 2015-04-07 12:22:30
  */
 
 'use strict';
@@ -16,7 +16,7 @@
         var title = document.title;
         var clientId = title.split('-')[1];
         var termId = title.split('-')[2];
-        var socket = io.connect();
+        var socket = io.connect('/term');
 
         socket.on('connect', function() {
             var handler = function(thunk) {

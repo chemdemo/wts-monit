@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-03 18:29:55
-* @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-06 02:50:17
+* @Last Modified by:   dm.yang
+* @Last Modified time: 2015-04-07 12:22:00
 */
 
 'use strict';
@@ -12,9 +12,10 @@ var _ = require('lodash');
 var clientsMgr = require('../lib/clients_manager');
 var logger = require('../helpers/logger').socket;
 
-exports.route = function(io) {
-    io.on('connection', onConn);
-};
+// exports.route = function(io) {
+//     io.of('/term').on('connection', onConn);
+// };
+module.exports = onConn;
 
 function onConn(sock) {
     sock.on('term:conf', onSockConf.bind({socket: sock}));

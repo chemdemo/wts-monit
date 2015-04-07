@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-03 16:17:50
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-05 19:49:22
+* @Last Modified time: 2015-04-07 12:21:43
 */
 
 'use strict';
@@ -34,7 +34,9 @@ var errorHanding = require('../middlewares/error_handing');
 
 // load routes
 var webRouter = require('../routes/web');
-var ioRouter = require('../routes/io');
+// var ioRouter = require('../routes/io');
+// var onPageSockConn = require('../routes/io_page');
+var onTermSockConn = require('../routes/io_term');
 
 // basic settings
 app.keys = [pkg.name, pkg.description];
@@ -73,7 +75,9 @@ io = io(server);
 // use routes
 webRouter.route(app);
 // app.use(terminal.middleware());
-ioRouter.route(io);
+// ioRouter.route(io);
+// io.of('/page').on('connection', onPageSockConn);
+io.of('/term').on('connection', onTermSockConn);
 
 exports.start = function() {
     server.listen(webConf.port, webConf.host, function() {
