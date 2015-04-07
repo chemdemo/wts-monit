@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 20:29:22
+* @Last Modified time: 2015-04-07 20:36:19
 */
 
 'use strict';
@@ -133,22 +133,18 @@ function getTerm(termId) {
     );
     var timer;
     var output = '';
-    var throttle = function(data) {
+    // throttle
+    var dataHandle = function(data) {
         output += data;
         if(timer) clearTimeout(timer);
         timer = setTimeout(function() {
-            clearImmediate(timer);
             console.log('OUTPUT:', output);
             send2monit({cmd: 'client:output', termId: termId, output: output});
             output = '';
         }, 30);
     };
 
-    // term.on('data', function(data) {
-    //     console.log('OUTPUT:', data);
-    //     send2monit({cmd: 'client:output', termId: termId, output: data});
-    // });
-    term.on('data', throttle);
+    term.on('data', dataHandle);
 
     terms[termId] = term;
 
