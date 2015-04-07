@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 20:13:28
+* @Last Modified time: 2015-04-07 20:19:35
 */
 
 'use strict';
@@ -97,6 +97,7 @@ function connect() {
     sock.connect(monitPort, monitHost);
 };
 
+var idx;
 function send2monit(msg) {
     if(!msg || !Object.keys(msg).length) return;
 
@@ -114,7 +115,8 @@ function send2monit(msg) {
 
     var str = JSON.stringify(msg);
 
-    setImmediate(function() {
+    idx = setImmediate(function() {
+        clearImmediate(idx);
         sock.write(str, 'utf8');
         console.log('client write msg:%s', str);
     });
