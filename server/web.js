@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-03 16:17:50
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 12:21:43
+* @Last Modified time: 2015-04-07 15:32:38
 */
 
 'use strict';
@@ -76,8 +76,8 @@ io = io(server);
 webRouter.route(app);
 // app.use(terminal.middleware());
 // ioRouter.route(io);
-// io.of('/page').on('connection', onPageSockConn);
-io.of('/term').on('connection', onTermSockConn);
+// io.of('/ws/page').on('connection', onPageSockConn);
+io.of('/ws/term').on('connection', onTermSockConn);
 
 exports.start = function() {
     server.listen(webConf.port, webConf.host, function() {

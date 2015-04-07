@@ -2,21 +2,32 @@
  * @Author: dm.yang
  * @Date:   2015-04-05 17:06:08
  * @Last Modified by:   dm.yang
- * @Last Modified time: 2015-04-07 13:35:11
+ * @Last Modified time: 2015-04-07 15:46:19
  */
 
 'use strict';
 
 ;(function(win) {
     // console.log(win.opener)
+    var clientHost;
+    var clientPort;
+    var clientId;
+    var termId;
 
     function init() {
-        var clientHost = document.documentElement.getAttribute('data-client-host');
-        var clientPort = document.documentElement.getAttribute('data-client-port');
         var title = document.title;
-        var clientId = title.split('-')[1];
-        var termId = title.split('-')[2];
-        var socket = io.connect('http://localhost:3005/term');
+
+        clientHost = document.documentElement.getAttribute('data-client-host');
+        clientPort = document.documentElement.getAttribute('data-client-port');
+        clientId = title.split('-')[1];
+        termId = title.split('-')[2];
+
+        createSock();
+    };
+
+    function createSock() {
+        var socket = io.connect(location.protocol + '//' + location.host + '/ws/term');
+        var data;
 
         socket.on('connect', function() {
             var handler = function(thunk) {
@@ -30,6 +41,13 @@
             });
 
             term.on('data', handler);
+            // term.on('key', function(key) {
+            //     if('\r' == key) {
+            //         if(!data) data = '\n';
+            //         socket.emit('term:input', data);
+            //         data = '';
+            //     }
+            // });
 
             term.open(document.body);
             term.write('\x1b[31mconnect to ' + [clientHost, clientPort].join(':') + '\x1b[m\r\n');
@@ -47,7 +65,7 @@
                 term.destroy();
             });
 
-            socket.emit('term:conf', clientId, termId);
+            socket.emit('term:online', clientId, termId);
             socket.emit('term:input', '\n');
         });
 

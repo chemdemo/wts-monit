@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-03 18:29:55
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 13:15:59
+* @Last Modified time: 2015-04-07 13:37:41
 */
 
 'use strict';
@@ -18,7 +18,7 @@ var logger = require('../helpers/logger').socket;
 module.exports = onConn;
 
 function onConn(sock) {
-    sock.on('term:conf', onSockConf.bind({socket: sock}));
+    sock.on('term:online', onSockOnline.bind({socket: sock}));
     sock.on('term:input', onSockInput.bind({socket: sock}));
     sock.on('disconnect', onSockDisconnect.bind({socket: sock}));
     sock.on('error', onSockError.bind({socket: sock}));
@@ -26,7 +26,7 @@ function onConn(sock) {
 
 // create session between term and remote client
 // maybe use socket.io session is better
-function onSockConf(clientId, termId) {
+function onSockOnline(clientId, termId) {
     var socket = this.socket;
     var client = clientsMgr.getClientById(clientId);
 
