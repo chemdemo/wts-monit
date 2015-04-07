@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-03 16:17:50
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 15:32:38
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-08 00:02:23
 */
 
 'use strict';
@@ -34,8 +34,7 @@ var errorHanding = require('../middlewares/error_handing');
 
 // load routes
 var webRouter = require('../routes/web');
-// var ioRouter = require('../routes/io');
-// var onPageSockConn = require('../routes/io_page');
+var onMonitSockConn = require('../routes/io_monit');
 var onTermSockConn = require('../routes/io_term');
 
 // basic settings
@@ -74,9 +73,7 @@ io = io(server);
 
 // use routes
 webRouter.route(app);
-// app.use(terminal.middleware());
-// ioRouter.route(io);
-// io.of('/ws/page').on('connection', onPageSockConn);
+io.of('/ws/monit').on('connection', onMonitSockConn);
 io.of('/ws/term').on('connection', onTermSockConn);
 
 exports.start = function() {

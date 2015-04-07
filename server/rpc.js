@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-03 19:01:26
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 21:22:24
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-08 00:39:51
 */
 
 'use strict';
@@ -37,7 +37,7 @@ function onSvrError(err) {
 
 function onSvrClose() {
     logger.error('Server closed');
-    clientsMgr.clientMap = {};
+    clientsMgr.removeAll();
     setTimeout(listen, 1000);
 };
 
