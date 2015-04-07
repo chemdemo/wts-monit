@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 21:36:10
+* @Last Modified time: 2015-04-07 21:48:44
 */
 
 'use strict';
@@ -121,7 +121,7 @@ function send2monit(msg) {
     // var str = JSON.stringify(msg);
 
     // sock.write(str);
-    sock.sendMessage(str);
+    sock.sendMessage(msg);
     // console.log('client write msg:%s', str);
     console.log('client write msg:%s', JSON.stringify(msg));
 };
