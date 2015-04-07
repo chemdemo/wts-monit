@@ -23,36 +23,21 @@
                     <th>host</th>
                     <th>port</th>
                     <th>status</th>
-                    <th>operation</th>
+                    <th>actions</th>
                 </tr>
             </thead>
             <tbody>
-            <% for(var groupName in group) { %>
-                <% var clients = group[groupName]; %>
-                <% clients.forEach(function(client, i) { %>
-                <tr>
-                    <% if(i == 0) { %>
-                    <td rowspan="<%= clients.length %>"><%= groupName %></td>
-                    <% } %>
-                    <td><%= client.id %></td>
-                    <td><%= client.host %></td>
-                    <td><%= client.port %></td>
-                    <td><i class="am-icon-circle status-<%= client.status %>"></i></td>
-                    <td>
-                        <a href="javascript:void(0);" data-client="open:<%= client.id %>" title="open term"><i class="am-icon-external-link"></i></a>
-                        <a href="javascript:void(0);" data-client="remove:<%= client.id %>" title="destroy"><i class="am-icon-remove"></i></a>
-                    </td>
-                </tr>
-                <% }); %>
-            <% } %>
+            <% include client-list.html %>
             </tbody>
         </table>
     </section>
     <!-- <footer>
         <p class="am-padding-left">&copy; 2015 chemdemo. Licensed under MIT license.</p>
     </footer> -->
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/amazeui.min.js"></script>
+    <script src="/js/underscore.js"></script>
     <script src="/js/monit.js"></script>
 </body>
 
