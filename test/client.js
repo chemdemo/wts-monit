@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 20:36:19
+* @Last Modified time: 2015-04-07 20:40:10
 */
 
 'use strict';
@@ -134,6 +134,7 @@ function getTerm(termId) {
     var timer;
     var output = '';
     // throttle
+    // sock.setNoDelay(false) may not work?
     var dataHandle = function(data) {
         output += data;
         if(timer) clearTimeout(timer);
