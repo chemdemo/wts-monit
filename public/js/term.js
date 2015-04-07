@@ -2,7 +2,7 @@
  * @Author: dm.yang
  * @Date:   2015-04-05 17:06:08
  * @Last Modified by:   dm.yang
- * @Last Modified time: 2015-04-07 12:22:30
+ * @Last Modified time: 2015-04-07 13:32:28
  */
 
 'use strict';
@@ -16,7 +16,7 @@
         var title = document.title;
         var clientId = title.split('-')[1];
         var termId = title.split('-')[2];
-        var socket = io.connect('/term');
+        var socket = io.connect('http://localhost:3005/term');
 
         socket.on('connect', function() {
             var handler = function(thunk) {
@@ -48,7 +48,11 @@
             });
 
             socket.emit('term:conf', clientId, termId);
-            socket.emit('term:input', '\n');
+            // socket.emit('term:input', '\n');
+        });
+
+        socket.on('error', function(err) {
+            console.error(err);
         });
     };
 
