@@ -2,20 +2,20 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 21:14:04
+* @Last Modified time: 2015-04-07 21:35:07
 */
 
 'use strict';
 
 var net = require('net');
 var fs = require('fs');
-var split = require('split');
+var JsonSocket = require('json-socket');
 var pty = require('pty.js');
 
 var monitHost = '0.0.0.0';
 var monitPort = 3977;
 
-var sock = new net.Socket();
+var sock = new JsonSocket(new net.Socket());
 var stream;
 var terms = {};
 
@@ -48,20 +48,19 @@ sock.on('close', function() {
 });
 
 // sock.on('data', dataHandle);
+sock.on('message', dataHandle);
 
 function connect() {
     sock.connect(monitPort, monitHost);
     sock.setEncoding('utf8');
-    sock = sock.pipe(split());
-    sock.on('data', dataHandle);
 };
 
 function dataHandle(msg) {
-    msg = msg.toString('utf8');
+    // msg = msg.toString('utf8');
 
     console.info('reveived msg:%s', msg);
 
-    msg = JSON.parse(msg);
+    // msg = JSON.parse(msg);
 
     if(!msg.cmd) {
         console.warn('param `cmd` missing');
@@ -119,10 +118,12 @@ function send2monit(msg) {
 
     msg.clientId = sock.clientId;
 
-    var str = JSON.stringify(msg);
+    // var str = JSON.stringify(msg);
 
-    sock.write(str);
-    console.log('client write msg:%s', str);
+    // sock.write(str);
+    sock.sendMessage(str);
+    // console.log('client write msg:%s', str);
+    console.log('client write msg:%s', JSON.stringify(msg));
 };
 
 function getTerm(termId) {
