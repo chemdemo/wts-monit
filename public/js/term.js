@@ -2,7 +2,7 @@
  * @Author: dm.yang
  * @Date:   2015-04-05 17:06:08
  * @Last Modified by:   dm.yang
- * @Last Modified time: 2015-04-07 18:25:26
+ * @Last Modified time: 2015-04-07 19:47:59
  */
 
 'use strict';
@@ -30,9 +30,6 @@
         var data;
 
         socket.on('connect', function() {
-            var handler = function(thunk) {
-                socket.emit('term:input', thunk);
-            };
             var term = new Terminal({
                 cols: 80,
                 rows: 40,
@@ -40,14 +37,9 @@
                 screenKeys: true
             });
 
-            term.on('data', handler);
-            // term.on('key', function(key) {
-            //     if('\r' == key) {
-            //         if(!data) data = '\n';
-            //         socket.emit('term:input', data);
-            //         data = '';
-            //     }
-            // });
+            term.on('data', function(thunk) {
+                socket.emit('term:input', thunk);
+            });
 
             term.open(document.body);
             term.write('\x1b[31mconnect to ' + [clientHost, clientPort].join(':') + '\x1b[m\r\n');
