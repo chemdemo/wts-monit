@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 20:40:10
+* @Last Modified time: 2015-04-07 20:51:54
 */
 
 'use strict';
@@ -131,21 +131,12 @@ function getTerm(termId) {
             cwd: process.env.HOME
         }
     );
-    var timer;
-    var output = '';
-    // throttle
-    // sock.setNoDelay(false) may not work?
-    var dataHandle = function(data) {
-        output += data;
-        if(timer) clearTimeout(timer);
-        timer = setTimeout(function() {
-            console.log('OUTPUT:', output);
-            send2monit({cmd: 'client:output', termId: termId, output: output});
-            output = '';
-        }, 30);
-    };
 
-    term.on('data', dataHandle);
+    // sock.setNoDelay(false) may not work?
+    term.on('data', function(data) {
+        console.log('OUTPUT:', data);
+        send2monit({cmd: 'client:output', termId: termId, output: data});
+    });
 
     terms[termId] = term;
 
