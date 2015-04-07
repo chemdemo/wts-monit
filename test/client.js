@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 21:48:44
+* @Last Modified time: 2015-04-07 21:56:15
 */
 
 'use strict';
@@ -58,7 +58,7 @@ function connect() {
 function dataHandle(msg) {
     // msg = msg.toString('utf8');
 
-    console.info('reveived msg:%s', msg);
+    console.info('reveived msg:%s', JSON.stringify(msg));
 
     // msg = JSON.parse(msg);
 
