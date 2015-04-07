@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-03 18:29:55
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 16:35:37
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-07 23:24:56
 */
 
 'use strict';
@@ -43,8 +43,7 @@ function onSockInput(data) {
 
     if(!client) {
         var output = 'Client Not Found.'
-        // socket.emit('client:output', output);
-        socket.emit('data', output);
+        socket.emit('client:output', output);
         logger.warn(output);
         return;
     }

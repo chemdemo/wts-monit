@@ -1,26 +1,26 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-03 16:29:45
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-05 21:56:43
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-08 00:32:00
 */
 
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
 var _ = require('lodash');
 
 var clientsMgr = require('../lib/clients_manager');
+var clientTmplPath = path.resolve(__dirname, '../view/client-list.html');
 
 exports.route = function(app) {
     app.get('/', function* () {
-        var map = clientsMgr.clientMap;
+        yield this.render('index', {group: clientsMgr.getGroup()});
+    });
 
-        map = _.groupBy(map, function(client) {
-            return client.group;
-        });
-
-        yield this.render('index', {group: map});
+    app.get('/tmpl/list', function* () {
+        this.body = fs.createReadStream(clientTmplPath);
     });
 
     app.get('/term/:clientId/:termId', function* () {
@@ -31,11 +31,11 @@ exports.route = function(app) {
         yield this.render('term', {host: client.host, port: client.port, clientId: client.id, termId: tid});
     });
 
-    app.post('/client/destroy/:clientId', function* () {
-        var cid = this.params['clientId'];
+    // app.post('/client/destroy/:clientId', function* () {
+    //     var cid = this.params['clientId'];
 
-        if(clientsMgr.removeClient(cid)) this.body = {code: 0};
-        else this.body = {code: 1};
-    });
+    //     if(clientsMgr.removeClient(cid)) this.body = {code: 0};
+    //     else this.body = {code: 1};
+    // });
 };
 
