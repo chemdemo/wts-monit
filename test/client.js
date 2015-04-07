@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
-* @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-06 03:04:11
+* @Last Modified by:   dm.yang
+* @Last Modified time: 2015-04-07 12:08:42
 */
 
 'use strict';
@@ -60,7 +60,7 @@ sock.on('data', function(msg) {
         case 'client:ready':
             if(msg.clientId) sock.clientId = msg.clientId;
 
-            send2monit({cmd: 'client:conf', group: 'foo'});
+            send2monit({cmd: 'client:online', group: 'foo'});
 
             break;
 
