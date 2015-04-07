@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-03 19:01:26
 * @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-08 00:39:51
+* @Last Modified time: 2015-04-08 03:03:29
 */
 
 'use strict';
@@ -37,7 +37,6 @@ function onSvrError(err) {
 
 function onSvrClose() {
     logger.error('Server closed');
-    clientsMgr.removeAll();
     setTimeout(listen, 1000);
 };
 
