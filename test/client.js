@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 21:35:07
+* @Last Modified time: 2015-04-07 21:36:10
 */
 
 'use strict';
@@ -52,7 +52,7 @@ sock.on('message', dataHandle);
 
 function connect() {
     sock.connect(monitPort, monitHost);
-    sock.setEncoding('utf8');
+    // sock.setEncoding('utf8');
 };
 
 function dataHandle(msg) {
