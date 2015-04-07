@@ -2,7 +2,7 @@
 * @Author: chemdemo
 * @Date:   2015-04-05 00:58:29
 * @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-06 02:43:33
+* @Last Modified time: 2015-04-08 02:35:38
 */
 
 'use strict';
@@ -11,21 +11,52 @@
 
     // {clientId: [Window, Window]}
     var termWins = {};
+    var $listView;
+    var socket;
 
     function init() {
+        $listView = $('#client-list');
+        createSock();
         bindEvents();
     };
 
+    function createSock() {
+        socket = io.connect(location.protocol + '//' + location.host + '/ws/monit');
+
+        socket.on('connect', function() {
+            socket.on('client:add', function(r) {
+                fetchClients(r.group);
+            });
+            socket.on('client:destroy', function(r) {
+                fetchClients(r.group);
+                closeTerm(r.clientId);
+            });
+            socket.on('client:clean', function(r) {
+                fetchClients(r.group);
+                closeTerm();
+            });
+
+            socket.on('disconnect', function() {
+                // alert('socket disconnect');
+                console.warn('socket disconnect');
+            });
+        });
+
+        socket.on('error', function(err) {
+            // alert('socket error', err.message);
+            console.error(err);
+        });
+    };
+
     function bindEvents() {
-        $('#client-list').on('click', 'a[data-client]', function(e) {
+        $listView.on('click', 'a[data-action]', function(e) {
             var $this = $(this);
-            var evt = $this.data('client').split(':');
-            var type = evt[0];
-            var cid = evt[1];
+            var act = $this.data('action');
+            var cid = $this.data('clientId');
 
             e.preventDefault();
 
-            switch(type) {
+            switch(act) {
                 case 'open':
                     openTerm(cid);
                     break;
@@ -62,6 +93,13 @@
     };
 
     function closeTerm(cid, tid) {
+        if(!cid) {
+            $.map(termWins, function(cid) {
+                closeTerm(cid);
+            });
+            return;
+        }
+
         var terms = termWins[cid] || [];
 
         $.each(terms, function(i, win) {
@@ -75,14 +113,22 @@
     };
 
     function removeClient(cid, $target) {
-        $.post('/client/destroy/' + cid).done(function(r) {
-            if(r.code == 0) {
-                // $target.parent().parent().remove();
-                closeTerm(cid);
-                location.reload();
-            } else {
-                alert('destroy client error');
-            }
+        // $.post('/client/destroy/' + cid).done(function(r) {
+        //     if(r.code == 0) {
+        //         // $target.parent().parent().remove();
+        //         closeTerm(cid);
+        //         fetchClients();
+        //     } else {
+        //         alert('destroy client error');
+        //     }
+        // });
+        socket.emit('client:destroy', cid);
+    };
+
+    function fetchClients(group) {
+        $.get('/tmpl/list').done(function(tmpl) {
+            var content = _.template(tmpl)({group: group});
+            $listView.find('tbody').html(content);
         });
     };
 
