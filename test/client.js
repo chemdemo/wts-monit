@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 15:25:20
+* @Last Modified time: 2015-04-07 18:37:06
 */
 
 'use strict';
@@ -94,7 +94,6 @@ sock.on('data', function(msg) {
 
 function connect() {
     sock.connect(monitPort, monitHost);
-    sock.setNoDelay(true);
 };
 
 function send2monit(msg) {
