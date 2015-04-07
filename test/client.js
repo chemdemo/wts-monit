@@ -2,19 +2,21 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 20:51:54
+* @Last Modified time: 2015-04-07 21:14:04
 */
 
 'use strict';
 
 var net = require('net');
 var fs = require('fs');
+var split = require('split');
 var pty = require('pty.js');
 
 var monitHost = '0.0.0.0';
 var monitPort = 3977;
 
 var sock = new net.Socket();
+var stream;
 var terms = {};
 
 connect();
@@ -45,7 +47,16 @@ sock.on('close', function() {
     }
 });
 
-sock.on('data', function(msg) {
+// sock.on('data', dataHandle);
+
+function connect() {
+    sock.connect(monitPort, monitHost);
+    sock.setEncoding('utf8');
+    sock = sock.pipe(split());
+    sock.on('data', dataHandle);
+};
+
+function dataHandle(msg) {
     msg = msg.toString('utf8');
 
     console.info('reveived msg:%s', msg);
@@ -91,10 +102,6 @@ sock.on('data', function(msg) {
 
         default: break;
     }
-});
-
-function connect() {
-    sock.connect(monitPort, monitHost);
 };
 
 function send2monit(msg) {
@@ -114,7 +121,7 @@ function send2monit(msg) {
 
     var str = JSON.stringify(msg);
 
-    sock.write(str, 'utf8');
+    sock.write(str);
     console.log('client write msg:%s', str);
 };
 
