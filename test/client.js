@@ -2,12 +2,13 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-07 18:37:06
+* @Last Modified time: 2015-04-07 20:13:28
 */
 
 'use strict';
 
 var net = require('net');
+var fs = require('fs');
 var pty = require('pty.js');
 
 var monitHost = '0.0.0.0';
@@ -113,10 +114,10 @@ function send2monit(msg) {
 
     var str = JSON.stringify(msg);
 
-    // use long connection
-    sock.write(str, 'utf8');
-    // sock.end(str, 'utf8');
-    console.log('client write msg:%s', str);
+    setImmediate(function() {
+        sock.write(str, 'utf8');
+        console.log('client write msg:%s', str);
+    });
 };
 
 function getTerm(termId) {
@@ -124,7 +125,7 @@ function getTerm(termId) {
 
     var term = pty.fork(
         process.env.SHELL || 'sh', [], {
-            name: require('fs').existsSync('/usr/share/terminfo/x/xterm-256color')
+            name: fs.existsSync('/usr/share/terminfo/x/xterm-256color')
                 ? 'xterm-256color'
                 : 'xterm',
             cols: 80,
@@ -133,9 +134,9 @@ function getTerm(termId) {
         }
     );
 
-    term.on('data', function(output) {
-        console.log('OUTPUT:', output);
-        send2monit({cmd: 'client:output', termId: termId, output: output});
+    term.on('data', function(data) {
+        console.log('OUTPUT:', data);
+        send2monit({cmd: 'client:output', termId: termId, output: data});
     });
 
     terms[termId] = term;
