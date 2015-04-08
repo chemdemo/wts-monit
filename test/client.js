@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 20:15:21
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-09 01:26:29
 */
 
 'use strict';
@@ -17,7 +17,7 @@ var Proto = builder.build('Socket');
 var Input = Proto.Input;
 var Output = Proto.Output;
 
-var monitHost = '192.168.33.88';
+var monitHost = '0.0.0.0';
 var monitPort = 3977;
 
 var client = new net.Socket();
@@ -28,7 +28,7 @@ connect();
 
 function connect() {
     client.connect(monitPort, monitHost);
-    client.setEncoding('utf8');
+    // client.setEncoding('utf8');
 };
 
 client.on('connect', function() {
@@ -59,54 +59,19 @@ client.on('close', function() {
 
 client.on('data', dataHandle);
 
-function dataHandle1(msg) {
-    msg = msg.toString('utf8');
-
-    console.info('reveived msg:%s', msg);
-
-    msg = JSON.parse(msg);
-
-    if(!msg.cmd) {
-        console.warn('param `cmd` missing');
-        return;
-    }
-
-    switch(msg.cmd) {
-        case 'client:ready':
-            if(msg.clientId) client.clientId = msg.clientId;
-
-            send2monit({cmd: 'client:online', group: 'foo'});
-
-            break;
-
-        case 'client:destroy':
-            process.exit();
-            break;
-
-        case 'term:input':
-            var term = getTerm(msg.termId);
-
-            if(term) term.write(msg.input, 'utf8');
-            console.log('INPUT:', msg.input);
-            break;
-
-        case 'term:destroy':
-            var term = getTerm(msg.termId);
-
-            if(term) {
-                delete terms[msg.termId];
-                console.log('remove term:%s', msg.termId);
-            }
-            break;
-
-        default: break;
-    }
-};
-
 function dataHandle(data) {
     console.info('reveived msg:%s', data);
 
-    var msg = Input.decode(data);
+    try {
+        var msg = Input.decode(data);
+    } catch(e) {
+        if(e.decoded) {
+            msg = e.decoded;
+        } else {
+            console.error(e);
+            return;
+        }
+    }
 
     if(!msg.cmd) {
         console.warn('param `cmd` missing');
@@ -161,9 +126,11 @@ function send2monit(msg) {
 
     msg.clientId = client.clientId;
 
-    console.log('client write msg:%s', JSON.stringify(msg));
-    var buffer = new Output(msg);
-    client.write(buffer.encode().toString('utf8'));
+    var output = new Output(msg);
+
+    client.write(output.toBuffer());
+    // only in debug mode
+    // console.log('send msg:%s to monitor', JSON.stringify(msg));
 };
 
 function getTerm(termId) {
