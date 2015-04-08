@@ -1,9 +1,3 @@
-<% if(Object.keys(group).length <= 0) { %>
-
-<p>No active clients.</p>
-
-<% } else { %>
-
 <% for(var groupName in group) { %>
     <% var clients = group[groupName]; %>
     <% clients.forEach(function(client, i) { %>
@@ -16,16 +10,16 @@
         <td><%= client.port %></td>
         <td><i class="am-icon-circle status-<%= client.status %>"></i></td>
         <td>
-            <a href="javascript:void(0);" 
-                data-action="open" 
-                data-client-id="<%= client.id %>" 
+            <a href="javascript:void(0);"
+                data-action="open"
+                data-client-id="<%= client.id %>"
                 title="open new term"
             >
                 <i class="am-icon-external-link"></i>
             </a>
-            <a href="javascript:void(0);" 
-                data-action="remove" 
-                data-client-id="<%= client.id %>" 
+            <a href="javascript:void(0);"
+                data-action="remove"
+                data-client-id="<%= client.id %>"
                 title="destroy remote client"
             >
             <i class="am-icon-remove"></i>
@@ -33,6 +27,4 @@
         </td>
     </tr>
     <% }); %>
-<% } %>
-
 <% } %>
