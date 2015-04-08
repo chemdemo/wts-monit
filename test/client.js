@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 20:10:48
+* @Last Modified time: 2015-04-08 20:13:55
 */
 
 'use strict';
@@ -104,9 +104,9 @@ function dataHandle1(msg) {
 };
 
 function dataHandle(data) {
-    var msg = Input.decode(data);
-
     console.info('reveived msg:%s', msg);
+
+    var msg = Input.decode(data);
 
     if(!msg.cmd) {
         console.warn('param `cmd` missing');
@@ -162,7 +162,8 @@ function send2monit(msg) {
     msg.clientId = client.clientId;
 
     console.log('client write msg:%s', JSON.stringify(msg));
-    client.write(new Output(msg).toArrayBuffer().toString('utf8'));
+    var buffer = new Output(msg);
+    client.write(buffer.encode().toString('utf8'));
 };
 
 function getTerm(termId) {
