@@ -1,5 +1,12 @@
 package Socket;
 
+message Input {
+    required string cmd = 1;
+    optional string clientId = 2;
+    optional string termId = 3;
+    optional int32 code = 4;
+}
+
 message Conf {
     oneof type {
         string group = 1;
@@ -8,24 +15,10 @@ message Conf {
     }
 }
 
-message Input {
-    required string cmd = 1;
-    optional string clientId = 2;
-    optional string termId = 3;
-    optional int32 code = 4;
-}
-
-message Res {
-    oneof type {
-        string output = 1;
-        Object conf = 2;
-    }
-}
-
 message Output {
     required string cmd = 1;
     required string clientId = 2;
     optional string termId = 3;
     optional string output = 4;
-    optional Object conf = 5;
+    optional Conf conf = 5;
 }

@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 19:03:50
+* @Last Modified time: 2015-04-08 19:40:14
 */
 
 'use strict';
@@ -144,29 +144,9 @@ function dataHandle(data) {
     }
 };
 
-function send2monit1(msg) {
+function send2monit(msg) {
     if(!msg || !Object.keys(msg).length) return;
 
-    if(!client.isConnect) {
-        console.warn('socket has not connected');
-        return;
-    }
-
-    if(!client.clientId) {
-        console.error('client id has not assigned');
-        return;
-    }
-
-    msg.clientId = client.clientId;
-
-    var str = JSON.stringify(msg);
-
-    client.write(str, 'utf8');
-    // client.sendMessage(msg);
-    console.log('client write msg:%s', str);
-};
-
-function send2monit(msg) {
     if(!client.isConnect) {
         console.warn('socket has not connected');
         return;
