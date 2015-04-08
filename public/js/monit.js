@@ -2,7 +2,7 @@
 * @Author: chemdemo
 * @Date:   2015-04-05 00:58:29
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 12:18:43
+* @Last Modified time: 2015-04-08 15:45:36
 */
 
 'use strict';
@@ -76,7 +76,7 @@
 
     function openTerm(cid) {
         var termId = String(Math.random()).replace('\.', '');
-        var features = 'directories=0,location=0,menubar=0,status=0,titlebar=0,toolbar=0,width=960,height=650';
+        var features = 'directories=0,location=0,menubar=0,status=0,titlebar=0,toolbar=0,width=1028,height=780';
         var termWin = window.open('/term/' + cid + '/' + termId, '', features);
 
         if(!(cid in termWins)) termWins[cid] = [];

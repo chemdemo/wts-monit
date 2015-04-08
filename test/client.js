@@ -2,45 +2,53 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 11:56:54
+* @Last Modified time: 2015-04-08 18:32:00
 */
 
 'use strict';
 
 var net = require('net');
 var fs = require('fs');
-// var JsonSocket = require('json-socket');
 var pty = require('pty.js');
+var ProtoBuf = require('protobufjs');
+
+var builder = ProtoBuf.loadProtoFile('../conf/socket.proto');
+var Proto = builder.build('Socket');
+var Input = Proto.Input;
+var Output = Proto.Output;
 
 var monitHost = '0.0.0.0';
 var monitPort = 3977;
 
-var sock = new net.Socket();
+var client = new net.Socket();
 var stream;
 var terms = {};
 
-// sock = new JsonSocket(sock);
-
 connect();
 
-sock.on('connect', function() {
+function connect() {
+    client.connect(monitPort, monitHost);
+    client.setEncoding('utf8');
+};
+
+client.on('connect', function() {
     console.log('monitor client connect to %s:%s success', monitHost, monitPort);
-    sock.isConnect = true;
+    client.isConnect = true;
 });
 
-sock.on('timeout', function() {
+client.on('timeout', function() {
     console.warn('monitor client timeout');
 });
 
-sock.on('error', function(err) {
+client.on('error', function(err) {
     console.error('monitor client error', err);
 });
 
-sock.on('close', function() {
-    sock.isConnect = false;
-    sock.clientId = null;
+client.on('close', function() {
+    client.isConnect = false;
+    client.clientId = null;
 
-    if(!sock.isDestroy) {
+    if(!client.isDestroy) {
         console.warn('monitor client closed');
         setTimeout(function() {
             console.log('try to reconnect monitor');
@@ -49,15 +57,9 @@ sock.on('close', function() {
     }
 });
 
-sock.on('data', dataHandle);
-// sock.on('message', dataHandle);
+client.on('data', dataHandle);
 
-function connect() {
-    sock.connect(monitPort, monitHost);
-    // sock.setEncoding('utf8');
-};
-
-function dataHandle(msg) {
+function dataHandle1(msg) {
     msg = msg.toString('utf8');
 
     console.info('reveived msg:%s', msg);
@@ -71,7 +73,7 @@ function dataHandle(msg) {
 
     switch(msg.cmd) {
         case 'client:ready':
-            if(msg.clientId) sock.clientId = msg.clientId;
+            if(msg.clientId) client.clientId = msg.clientId;
 
             send2monit({cmd: 'client:online', group: 'foo'});
 
@@ -79,10 +81,6 @@ function dataHandle(msg) {
 
         case 'client:destroy':
             process.exit();
-            // sock.isDestroy = true;
-            // sock.destroy();
-            // send2monit({cmd: 'client:destroy'});
-
             break;
 
         case 'term:input':
@@ -105,26 +103,88 @@ function dataHandle(msg) {
     }
 };
 
-function send2monit(msg) {
+function dataHandle(data) {
+    var msg = Input.decode(data);
+
+    if(!msg.cmd) {
+        console.warn('param `cmd` missing');
+        return;
+    }
+
+    switch(msg.cmd) {
+        case 'client:ready':
+            if(msg.clientId) client.clientId = msg.clientId;
+
+            send2monit('client:conf', {group: 'foo'});
+
+            break;
+
+        case 'client:destroy':
+            process.exit();
+            break;
+
+        case 'term:input':
+            var term = getTerm(msg.termId);
+
+            if(term) term.write(msg.input, 'utf8');
+            console.log('INPUT:', msg.input);
+            break;
+
+        case 'term:destroy':
+            var term = getTerm(msg.termId);
+
+            if(term) {
+                delete terms[msg.termId];
+                console.log('remove term:%s', msg.termId);
+            }
+            break;
+
+        default: break;
+    }
+};
+
+function send2monit1(msg) {
     if(!msg || !Object.keys(msg).length) return;
 
-    if(!sock.isConnect) {
+    if(!client.isConnect) {
         console.warn('socket has not connected');
         return;
     }
 
-    if(!sock.clientId) {
+    if(!client.clientId) {
         console.error('client id has not assigned');
         return;
     }
 
-    msg.clientId = sock.clientId;
+    msg.clientId = client.clientId;
 
     var str = JSON.stringify(msg);
 
-    sock.write(str, 'utf8');
-    // sock.sendMessage(msg);
+    client.write(str, 'utf8');
+    // client.sendMessage(msg);
     console.log('client write msg:%s', str);
+};
+
+function send2monit(cmd, res, termId) {
+    if(!client.isConnect) {
+        console.warn('socket has not connected');
+        return;
+    }
+
+    if(!client.clientId) {
+        console.error('client id has not assigned');
+        return;
+    }
+
+    var model = {
+        cmd: cmd,
+        clientId: client.clientId,
+        res: res
+    };
+
+    if(termId) model.termId = termId;
+
+    client.write(new Output(model).toArrayBuffer());
 };
 
 function getTerm(termId) {
@@ -135,16 +195,17 @@ function getTerm(termId) {
             name: fs.existsSync('/usr/share/terminfo/x/xterm-256color')
                 ? 'xterm-256color'
                 : 'xterm',
-            cols: 120,
-            rows: 40,
+            cols: 130,
+            rows: 45,
             cwd: process.env.HOME
         }
     );
 
-    // sock.setNoDelay(false) may not work?
+    // client.setNoDelay(false) may not work?
     term.on('data', function(data) {
         console.log('OUTPUT:', data);
-        send2monit({cmd: 'client:output', termId: termId, output: data});
+        // send2monit1({cmd: 'client:output', termId: termId, output: data});
+        send2monit('client:output', data, termId);
     });
 
     terms[termId] = term;

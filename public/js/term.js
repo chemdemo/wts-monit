@@ -1,8 +1,8 @@
 /*
  * @Author: dm.yang
  * @Date:   2015-04-05 17:06:08
- * @Last Modified by:   chemdemo
- * @Last Modified time: 2015-04-07 23:00:28
+ * @Last Modified by:   dm.yang
+ * @Last Modified time: 2015-04-08 15:44:14
  */
 
 'use strict';
@@ -31,8 +31,8 @@
 
         socket.on('connect', function() {
             var term = new Terminal({
-                cols: 120,
-                rows: 40,
+                cols: 130,
+                rows: 45,
                 useStyle: true,
                 screenKeys: true
             });
