@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-05 17:13:43
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 15:00:38
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-09 01:22:54
 */
 
 body {
@@ -21,7 +21,7 @@ body {
     height: 100%;
     float: none;
     font-family: Consolas, monospace;
-    font-size: 14px;
+    font-size: 13px;
     color: rgb(240, 240, 240);
     padding: 10px;
     border: none !important;
