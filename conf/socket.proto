@@ -4,15 +4,8 @@ message Input {
     required string cmd = 1;
     optional string clientId = 2;
     optional string termId = 3;
-    optional int32 code = 4;
-}
-
-message Conf {
-    oneof type {
-        string group = 1;
-        int32 cols = 2;
-        int32 rows = 3;
-    }
+    optional string input = 4;
+    optional int32 code = 5;
 }
 
 message Output {
@@ -20,5 +13,12 @@ message Output {
     required string clientId = 2;
     optional string termId = 3;
     optional string output = 4;
+
+    message Conf {
+        optional string group = 1;
+        optional int32 cols = 2;
+        optional int32 rows = 3;
+    }
+
     optional Conf conf = 5;
 }
