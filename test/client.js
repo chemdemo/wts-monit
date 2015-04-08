@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 19:43:05
+* @Last Modified time: 2015-04-08 20:10:48
 */
 
 'use strict';
@@ -17,7 +17,7 @@ var Proto = builder.build('Socket');
 var Input = Proto.Input;
 var Output = Proto.Output;
 
-var monitHost = '0.0.0.0';
+var monitHost = '192.168.33.88';
 var monitPort = 3977;
 
 var client = new net.Socket();
@@ -106,6 +106,8 @@ function dataHandle1(msg) {
 function dataHandle(data) {
     var msg = Input.decode(data);
 
+    console.info('reveived msg:%s', msg);
+
     if(!msg.cmd) {
         console.warn('param `cmd` missing');
         return;
@@ -160,7 +162,7 @@ function send2monit(msg) {
     msg.clientId = client.clientId;
 
     console.log('client write msg:%s', JSON.stringify(msg));
-    client.write(new Output(msg).toArrayBuffer());
+    client.write(new Output(msg).toArrayBuffer().toString('utf8'));
 };
 
 function getTerm(termId) {
