@@ -26,5 +26,6 @@ message Output {
     required string cmd = 1;
     required string clientId = 2;
     optional string termId = 3;
-    optional Res res = 4;
+    optional string output = 4;
+    optional Object conf = 5;
 }

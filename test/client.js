@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 18:32:00
+* @Last Modified time: 2015-04-08 19:03:50
 */
 
 'use strict';
@@ -115,7 +115,8 @@ function dataHandle(data) {
         case 'client:ready':
             if(msg.clientId) client.clientId = msg.clientId;
 
-            send2monit('client:conf', {group: 'foo'});
+            send2monit({cmd: 'client:conf', conf: {group: 'foo'}});
+            send2monit({cmd: 'client:online');
 
             break;
 
@@ -165,7 +166,7 @@ function send2monit1(msg) {
     console.log('client write msg:%s', str);
 };
 
-function send2monit(cmd, res, termId) {
+function send2monit(msg) {
     if(!client.isConnect) {
         console.warn('socket has not connected');
         return;
@@ -176,15 +177,10 @@ function send2monit(cmd, res, termId) {
         return;
     }
 
-    var model = {
-        cmd: cmd,
-        clientId: client.clientId,
-        res: res
-    };
+    msg.clientId = client.clientId;
 
-    if(termId) model.termId = termId;
-
-    client.write(new Output(model).toArrayBuffer());
+    console.log('client write msg:%s', JSON.stringify(msg));
+    client.write(new Output(msg).toArrayBuffer());
 };
 
 function getTerm(termId) {
@@ -204,8 +200,7 @@ function getTerm(termId) {
     // client.setNoDelay(false) may not work?
     term.on('data', function(data) {
         console.log('OUTPUT:', data);
-        // send2monit1({cmd: 'client:output', termId: termId, output: data});
-        send2monit('client:output', data, termId);
+        send2monit({cmd: 'client:output', termId: termId, output: data});
     });
 
     terms[termId] = term;
