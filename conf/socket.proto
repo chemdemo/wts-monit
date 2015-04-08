@@ -1,0 +1,30 @@
+package Socket;
+
+message Conf {
+    oneof type {
+        string group = 1;
+        int32 cols = 2;
+        int32 rows = 3;
+    }
+}
+
+message Input {
+    required string cmd = 1;
+    optional string clientId = 2;
+    optional string termId = 3;
+    optional int32 code = 4;
+}
+
+message Res {
+    oneof type {
+        string output = 1;
+        Object conf = 2;
+    }
+}
+
+message Output {
+    required string cmd = 1;
+    required string clientId = 2;
+    optional string termId = 3;
+    optional Res res = 4;
+}
