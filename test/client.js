@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 20:13:55
+* @Last Modified time: 2015-04-08 20:15:21
 */
 
 'use strict';
@@ -104,7 +104,7 @@ function dataHandle1(msg) {
 };
 
 function dataHandle(data) {
-    console.info('reveived msg:%s', msg);
+    console.info('reveived msg:%s', data);
 
     var msg = Input.decode(data);
 
