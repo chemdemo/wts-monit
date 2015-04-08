@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2014-12-17 17:51:48
-* @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-05 17:32:19
+* @Last Modified by:   chemdemo
+* @Last Modified time: 2015-04-09 01:51:21
 */
 
 'use strict';
@@ -37,7 +37,8 @@ function hook(type, logger) {
         var _method = logger[method];
 
         logger[method] = function() {
-            console[method == 'info' ? 'log' : method].apply(this, arguments);
+            // console has no `debug` method in Node.js
+            console[method == 'debug' ? 'log' : method].apply(this, arguments);
             // _method();
         };
     });
