@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-03 18:29:55
-* @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-08 03:04:21
+* @Last Modified by:   dm.yang
+* @Last Modified time: 2015-04-08 12:01:14
 */
 
 'use strict';
@@ -23,7 +23,7 @@ function onConn(sock) {
 
     clientsMgr.on('client:destroy', onClientRemove);
 
-    sock.on('client:destroy', clientsMgr.removeClient);
+    sock.on('client:destroy', clientsMgr.removeClient.bind(clientsMgr));
 
     sock.on('disconnect', function() {
         clientsMgr.removeListener('client:online', onClientOnline);
