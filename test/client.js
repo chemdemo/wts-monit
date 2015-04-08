@@ -1,15 +1,15 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
-* @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-08 02:12:08
+* @Last Modified by:   dm.yang
+* @Last Modified time: 2015-04-08 11:56:54
 */
 
 'use strict';
 
 var net = require('net');
 var fs = require('fs');
-var JsonSocket = require('json-socket');
+// var JsonSocket = require('json-socket');
 var pty = require('pty.js');
 
 var monitHost = '0.0.0.0';
