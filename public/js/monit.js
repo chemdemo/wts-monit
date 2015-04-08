@@ -2,7 +2,7 @@
 * @Author: chemdemo
 * @Date:   2015-04-05 00:58:29
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 11:58:57
+* @Last Modified time: 2015-04-08 12:18:43
 */
 
 'use strict';
@@ -113,15 +113,6 @@
     };
 
     function removeClient(cid, $target) {
-        // $.post('/client/destroy/' + cid).done(function(r) {
-        //     if(r.code == 0) {
-        //         // $target.parent().parent().remove();
-        //         closeTerm(cid);
-        //         fetchClients();
-        //     } else {
-        //         alert('destroy client error');
-        //     }
-        // });
         socket.emit('client:destroy', cid);
     };
 
