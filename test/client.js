@@ -2,7 +2,7 @@
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-08 19:40:14
+* @Last Modified time: 2015-04-08 19:43:05
 */
 
 'use strict';
@@ -116,7 +116,7 @@ function dataHandle(data) {
             if(msg.clientId) client.clientId = msg.clientId;
 
             send2monit({cmd: 'client:conf', conf: {group: 'foo'}});
-            send2monit({cmd: 'client:online');
+            send2monit({cmd: 'client:online'});
 
             break;
 
