@@ -2,7 +2,7 @@
  * @Author: dm.yang
  * @Date:   2015-04-05 17:06:08
  * @Last Modified by:   dm.yang
- * @Last Modified time: 2015-04-09 11:14:40
+ * @Last Modified time: 2015-04-09 16:06:46
  */
 
 'use strict';
@@ -42,11 +42,12 @@
             });
 
             term.open(document.body);
-            term.write('\x1b[31mconnect to ' + [clientHost, clientPort].join(':') + '\x1b[m\r\n');
+            // @see http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-debug-ansi.html
+            term.write('\x1b[1m\x1b[32mconnect to ' + [clientHost, clientPort].join(':') + '\x1b[m\r\n');
 
             socket.on('client:output', function(output) {
                 console.log('output:', output);
-                term.write((output || '\x1b[31mEMPTY\x1b[m'));
+                term.write((output || '\x1b[31mNULL\x1b[m'));
             });
 
             socket.on('client:destroy', function() {
