@@ -1,2 +1,4 @@
-# nfly-monit
-Harvester for nfly.
+# rchell-monit
+
+Remote web consoles monit build with nodejs.
+
