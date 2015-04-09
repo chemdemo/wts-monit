@@ -16,8 +16,6 @@ message Output {
 
     message Conf {
         optional string group = 1;
-        optional int32 cols = 2;
-        optional int32 rows = 3;
     }
 
     optional Conf conf = 5;
