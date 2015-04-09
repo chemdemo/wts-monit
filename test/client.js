@@ -1,8 +1,8 @@
 /*
 * @Author: dm.yang
 * @Date:   2015-04-05 15:55:27
-* @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-09 01:26:29
+* @Last Modified by:   dm.yang
+* @Last Modified time: 2015-04-09 11:14:52
 */
 
 'use strict';
@@ -141,8 +141,8 @@ function getTerm(termId) {
             name: fs.existsSync('/usr/share/terminfo/x/xterm-256color')
                 ? 'xterm-256color'
                 : 'xterm',
-            cols: 130,
-            rows: 45,
+            cols: 135,
+            rows: 50,
             cwd: process.env.HOME
         }
     );

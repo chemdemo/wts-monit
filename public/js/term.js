@@ -2,7 +2,7 @@
  * @Author: dm.yang
  * @Date:   2015-04-05 17:06:08
  * @Last Modified by:   dm.yang
- * @Last Modified time: 2015-04-08 15:44:14
+ * @Last Modified time: 2015-04-09 11:14:40
  */
 
 'use strict';
@@ -31,8 +31,8 @@
 
         socket.on('connect', function() {
             var term = new Terminal({
-                cols: 130,
-                rows: 45,
+                cols: 135,
+                rows: 50,
                 useStyle: true,
                 screenKeys: true
             });
