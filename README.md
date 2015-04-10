@@ -49,7 +49,11 @@ node/iojs index.js # iojs
 pm2 start pm2_deploy.json
 ```
 
-then open `http://[YOUR ID]:[PORT]` in browser.
+then open `http://[YOUR HOST]:[YOUR PORT]` in browser.
+
+### clients
+
+- Node.js client: [wts-node](https://github.com/chemdemo/wts-node)
 
 ### Todo
 
