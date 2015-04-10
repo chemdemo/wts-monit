@@ -1,0 +1,5 @@
+examples/
+logs/
+node_modules/
+images/
+.travis.yml
