@@ -1,8 +1,10 @@
 # wts-monit
 
-**Send commands to remote terminal to execute and then show result on the web console.**
+> Send commands to remote terminal to execute and then show result on the web console.
 
-WTS monitor launch a socket server as RPC server, any remote(or maybe the monitor self) terminal can create a socket then connect to the RPC server.Also WTS monitor will launch a websocket server to manage all remote clients.
+WTS monitor launch a socket server as RPC server, any remote(or maybe the monitor self) terminal can create a socket then connect to the RPC server.
+
+Also WTS monitor will launch a websocket server to manage all remote clients.
 
 
 The system architecture:
