@@ -1,10 +1,10 @@
 {
   "name": "rshell-monit",
   "version": "0.1.0",
-  "description": "Remote shell consoles monit build with nodejs",
+  "description": "Web terminal shell monit build with Node.js",
   "private": true,
   "scripts": {
-    "start": "node index"
+    "start": "node --harmony index"
   },
   "dependencies": {
     "co": "4.5.1",
