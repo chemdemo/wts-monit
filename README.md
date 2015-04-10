@@ -1,4 +1,62 @@
-# rshell-monit
+# wts-monit
 
-Remote web consoles monit build with nodejs.
+> Web terminal shell monit build with Node.js.
 
+## Send commands to remote terminal to execute and then show result on the web console.
+
+WTS monitor launch a socket server as RPC server, any remote(or maybe the monitor self) terminal can create a socket then connect to the RPC server.Also WTS monitor will launch a websocket server to manage all remote clients.
+
+
+The system architecture:
+
+![wts architecture](https://raw.githubusercontent.com/chemdemo/wts-monit/master/images/architecture.png)
+
+runtime screenshots:
+
+![wts architecture](https://raw.githubusercontent.com/chemdemo/wts-monit/master/images/wts.png)
+
+
+### Usage
+
+- install via npm
+
+``` bach
+npm install wts-monit
+```
+
+- install dependencies
+
+``` bash
+npm install
+```
+
+- conf server(s) port
+
+``` bash
+vim conf/index.js
+```
+
+- run as debug
+
+``` bash
+node --harmony index.js # Node.js v0.12+
+node/iojs index.js # iojs
+```
+
+- deploy via `pm2`
+
+``` bash
+pm2 start pm2_deploy.json
+```
+
+then open `http://[YOUR ID]:[PORT]` in browser.
+
+### Todo
+
+- login access control
+
+- command access control
+
+### License
+
+Copyright (c) 2015, chemdemo (MIT License)
