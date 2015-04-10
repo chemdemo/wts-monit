@@ -1,0 +1,10 @@
+{
+    "name": "rshell-monit",
+    "script": "index.js",
+    "instances": "1",
+    "exec_mode"  : "fork_mode",
+    "env": {
+        "NODE_ENV": "production"
+    },
+    "node_args": "--harmony"
+}
