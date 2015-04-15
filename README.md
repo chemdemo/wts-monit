@@ -1,7 +1,7 @@
+![wts-monit](./images/logo.png)
+
 # wts-monit
 [![NPM version](https://badge.fury.io/js/wts-monit.png)](https://npmjs.org/package/wts-monit)
-
-![Mango](./images/logo.png)
 
 > Send commands to remote terminal to execute and then show result on the web console.
 
