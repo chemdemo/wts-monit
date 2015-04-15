@@ -1,30 +1,35 @@
 <% for(var groupName in group) { %>
-    <% var clients = group[groupName]; %>
-    <% clients.forEach(function(client, i) { %>
-    <tr id="c-<% client.id %>">
-        <% if(i == 0) { %>
-        <td rowspan="<%= clients.length %>"><%= groupName %></td>
-        <% } %>
-        <td><%= client.id %></td>
-        <td><%= client.host %></td>
-        <td><%= client.port %></td>
-        <td><i class="am-icon-circle status-<%= client.status %>"></i></td>
-        <td>
-            <a href="javascript:void(0);"
-                data-action="open"
-                data-client-id="<%= client.id %>"
-                title="open new term"
-            >
-                <i class="am-icon-external-link"></i>
-            </a>
-            <a href="javascript:void(0);"
-                data-action="remove"
-                data-client-id="<%= client.id %>"
-                title="destroy remote client"
-            >
-            <i class="am-icon-remove"></i>
-            </a>
-        </td>
-    </tr>
-    <% }); %>
+
+<% var clients=group[groupName]; %>
+
+<% clients.forEach(function(client, i) { %>
+<tr id="c-<% client.id %>">
+    <% if(i == 0) { %>
+    <td rowspan="<%= clients.length %>"><%= groupName %></td>
+    <% } %>
+    <td>
+        <%= client.id %>
+    </td>
+    <td>
+        <%= client.host %>
+    </td>
+    <td>
+        <%= client.port %>
+    </td>
+    <td><i class="am-icon-circle status-<%= client.status %>"></i></td>
+    <td>
+        <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" data-action="open" data-client-id="<%= client.id %>" title="open new term">
+                    <i class="am-icon-external-link"></i> open
+                </button>
+                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" data-action="remove" data-client-id="<%= client.id %>" title="destroy remote client">
+                    <i class="am-icon-trash-o"></i> remove
+                </button>
+            </div>
+        </div>
+    </td>
+</tr>
+<% }); %>
+
 <% } %>

@@ -1,8 +1,8 @@
 /*
 * @Author: chemdemo
 * @Date:   2015-04-05 00:58:29
-* @Last Modified by:   chemdemo
-* @Last Modified time: 2015-04-09 17:31:00
+* @Last Modified by:   dm.yang
+* @Last Modified time: 2015-04-15 18:55:20
 */
 
 'use strict';
@@ -49,7 +49,7 @@
     };
 
     function bindEvents() {
-        $listView.on('click', 'a[data-action]', function(e) {
+        $listView.on('click', '[data-action]', function(e) {
             var $this = $(this);
             var act = $this.data('action');
             var cid = $this.data('clientId');

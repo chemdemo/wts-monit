@@ -2,14 +2,21 @@
 * @Author: chemdemo
 * @Date:   2015-04-05 00:59:06
 * @Last Modified by:   dm.yang
-* @Last Modified time: 2015-04-05 18:06:33
+* @Last Modified time: 2015-04-15 18:54:47
 */
 
 .client-list {
     width: 90%;
     margin: 0 auto;
-    /*table-layout: fixed;*/
     border-collapse: collapse;
+}
+
+.client-list thead tr th {
+    border-bottom-width: 2px;
+}
+
+.client-list td {
+    vertical-align: middle !important;
 }
 
 .client-list td[rowspan] {
@@ -17,6 +24,14 @@
     text-align: center;
     color: #3bb4f2;
     font-weight: bold;
+}
+
+.client-list button {
+    background-color: #FFF;
+}
+
+.client-list button i {
+    vertical-align: middle;
 }
 
 .am-icon-circle {
@@ -29,4 +44,14 @@
 
 .status-offline {
     color: #dd514c;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #DDD;
+    background-color: #EEE;
+    padding-top: 10px;
 }
