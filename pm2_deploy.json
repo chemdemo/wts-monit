@@ -1,5 +1,5 @@
 {
-    "name": "rshell-monit",
+    "name": "wts-monit",
     "script": "index.js",
     "instances": "1",
     "exec_mode"  : "fork_mode",
