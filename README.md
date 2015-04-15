@@ -23,8 +23,14 @@ runtime screenshots:
 
 - install via npm
 
-``` bach
+``` bash
 npm install wts-monit
+```
+
+or just clone from github:
+
+``` bash
+git clone https://github.com/chemdemo/wts-monit.git
 ```
 
 - install dependencies

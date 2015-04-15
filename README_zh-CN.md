@@ -14,7 +14,6 @@ monitor基于koa启动一个webserver，再使用websocket与前端实时互推�
 
 ![wts architecture](https://raw.githubusercontent.com/chemdemo/wts-monit/master/images/wts.png)
 
-
 ### 使用场景
 
 - 偷懒：不用安装类似xshell的terminal软件了，开个网页即可连到服务器
@@ -29,6 +28,12 @@ wts-monit已经作为node模块发布到npm，可以直接通过npm安装（选�
 
 ``` bash
 npm install wts-monit
+```
+
+或者直接从github拉代码：
+
+``` bash
+git clone https://github.com/chemdemo/wts-monit.git
 ```
 
 安装好依赖模块之后即可启动monit（由于使用了koa框架，所以需要Node版本0.12+或者io.js）
