@@ -26,38 +26,38 @@ runtime screenshots:
 - install via npm
 
 ``` bash
-npm install wts-monit
+$ npm install wts-monit
 ```
 
 or just clone from github:
 
 ``` bash
-git clone https://github.com/chemdemo/wts-monit.git
+$ git clone https://github.com/chemdemo/wts-monit.git
 ```
 
 - install dependencies
 
 ``` bash
-npm install
+$ npm install
 ```
 
 - conf server(s) port
 
 ``` bash
-vim conf/index.js
+$ vim conf/index.js
 ```
 
 - run as debug
 
 ``` bash
-node --harmony index.js # Node.js v0.12+
-node/iojs index.js # iojs
+$ node --harmony index.js # Node.js v0.12+
+$ node/iojs index.js # iojs
 ```
 
 - deploy via `pm2`
 
 ``` bash
-pm2 start pm2_deploy.json
+$ pm2 start pm2_deploy.json
 ```
 
 then open `http://[YOUR HOST]:[YOUR PORT]` in browser.
