@@ -27,25 +27,25 @@ monitor基于koa启动一个webserver，再使用websocket与前端实时互推�
 wts-monit已经作为node模块发布到npm，可以直接通过npm安装（选择一台与公网隔离的机器）：
 
 ``` bash
-npm install wts-monit
+$ npm install wts-monit
 ```
 
 或者直接从github拉代码：
 
 ``` bash
-git clone https://github.com/chemdemo/wts-monit.git
+$ git clone https://github.com/chemdemo/wts-monit.git
 ```
 
 安装好依赖模块之后即可启动monit（由于使用了koa框架，所以需要Node版本0.12+或者io.js）
 
 ``` bash
-cd wts-monit && node index.js
+$ cd wts-monit && node index.js
 ```
 
 或者推荐使用pm2来启动：
 
 ``` bash
-pm2 start pm2_deploy.json
+$ pm2 start pm2_deploy.json
 ```
 
 
@@ -56,24 +56,24 @@ pm2 start pm2_deploy.json
 接着在各remote机器上安装client模块：
 
 ``` bash
-npm install wts-node
+$ npm install wts-node
 ```
 
 一般来说，一台remote机器上器启一个实例即可，然后为了方便管理，最好给remote机器分配一个group：
 
 ``` bash
-cd wts-node && vim conf.js # 一般只需要设置group项即可
+$ cd wts-node && vim conf.js # 一般只需要设置group项即可
 ```
 
 
 调试：
 
 ``` bash
-node index.js
+$ node index.js
 ```
 
 部署启动：
 
 ``` bash
-pm2 start pm2_deploy.json
+$ pm2 start pm2_deploy.json
 ```
