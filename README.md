@@ -21,7 +21,7 @@ runtime screenshots:
 ![wts architecture](https://raw.githubusercontent.com/chemdemo/wts-monit/master/images/wts.png)
 
 
-### Usage
+## Usage
 
 - install via npm
 
@@ -50,8 +50,7 @@ $ vim conf/index.js
 - run as debug
 
 ``` bash
-$ node --harmony index.js # Node.js v0.12+
-$ node/iojs index.js # iojs
+$ node index.js # relies on Node.js V5.0+
 ```
 
 - deploy via `pm2`
@@ -62,16 +61,16 @@ $ pm2 start pm2_deploy.json
 
 then open `http://[YOUR HOST]:[YOUR PORT]` in browser.
 
-### socket clients written by different languages
+## socket clients written by different languages
 
 - Node.js client: [wts-node](https://github.com/chemdemo/wts-node)
 
-### Todo
+## Todo
 
 - login access control
 
 - command access control
 
-### License
+## License
 
 Copyright (c) 2015, chemdemo (MIT License)
